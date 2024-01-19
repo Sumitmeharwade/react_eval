@@ -1,0 +1,167 @@
+import React from "react";
+
+class Form extends React.Component {
+  constructor(props) {
+    super(props);
+    // this.state = {
+    //   fname: '',
+    //   lname: '',
+    //   selectedOption: '',
+    //   sem: '',
+    //   div: '',
+    //   user: '',
+    //   event1: '',
+    //   event2: '',
+    //   event3: '',
+    //   event4: '',
+    //   event5: '',
+    //   loc: ''
+    // };
+    this.state={fname:''};
+    this.lname={lname:''};
+    this.state={gen:''};
+     this.state={age:''};
+     this.state={sem:''};
+    this.state={event1:''};
+     this.state={event2:''};
+     this.state={event3:''};
+     this.state={event4:''};
+     this.state={loc:''};
+
+    this.updateFirstName = this.updateFirstName.bind(this);
+    this.updateLastName = this.updateLastName.bind(this);
+    this.handleGenderChange = this.handleGenderChange.bind(this);
+    this.updateSemester = this.updateSemester.bind(this);
+    this.updateDivision = this.updateDivision.bind(this);
+    this.updateCheckbox = this.updateCheckbox.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  updateFirstName(event) {
+    this.setState({ fname: event.target.value });
+  }
+
+  updateLastName(event) {
+    this.setState({ lname: event.target.value });
+  }
+
+  handleGenderChange(event) {
+    this.setState({ selectedOption: event.target.value });
+  }
+
+  updateSemester(event) {
+    this.setState({ sem: event.target.value });
+  }
+
+  updateDivision(event) {
+    this.setState({ div: event.target.value });
+  }
+
+  updateCheckbox(event) {
+    const { id, checked } = event.target;
+    this.setState({ [id]: checked ? id : '' });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    const { fname, lname, selectedOption, sem, div, event1, event2, event3, event4, event5 } = this.state;
+
+    if (!fname.trim()) {
+      alert("Please enter your first name.");
+    } else if (!lname.trim()) {
+      alert("Please enter your last name.");
+    } else if (!selectedOption) {
+      alert("Please select your gender.");
+    } else if (!sem) {
+      alert("Please select your semester.");
+    } else if (!div) {
+      alert("Please select your division.");
+    } else if (!(event1 || event2 || event3 || event4 || event5)) {
+      alert("Please select at least one event.");
+    } else {
+      alert("The form has been submitted.");
+    }
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit} align="center" className='form'>
+        <h1>Events Registration</h1>
+        <hr />
+        <label>
+          First Name:
+          <input type="text" value={this.state.fname} onChange={this.updateFirstName} />
+        </label><br/><br/>
+        <label>
+          Last Name:
+          <input type="text" value={this.state.lname} onChange={this.updateLastName} />
+        </label><br/><br/>
+        <div className="radio">
+          <label>
+            Male
+            <input
+              type="radio"
+              value="Male"
+              checked={this.state.selectedOption === "Male"}
+              onChange={this.handleGenderChange}
+            />
+          </label>
+        </div>
+        <div className="radio">
+          <label>
+            Female
+            <input
+              type="radio"
+              value="Female"
+              checked={this.state.selectedOption === "Female"}
+              onChange={this.handleGenderChange}
+            />
+          </label>
+        </div><br/><br/>
+        <label>
+          Semester:
+          <select value={this.state.sem} onChange={this.updateSemester}>
+            <option value="">Select Semester</option>
+            <option value="I">I</option>
+            <option value="II">II</option>
+          </select>
+        </label><br/><br/>
+        <label>
+          Division:
+          <select value={this.state.div} onChange={this.updateDivision}>
+            <option value="">Select Division</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+          </select>
+        </label>
+        <div>
+          <label>
+            FlashMob
+            <input type="checkbox" id="event1" onChange={this.updateCheckbox} /><br/>
+          </label>
+        </div>
+        <input type="submit" value="Submit" />
+        <br/>
+        <div className="details">
+          <hr />
+          <h1>Details Entered</h1>
+          <hr />
+          <h2>First Name: {this.state.fname}</h2>
+          <h2>Last Name: {this.state.lname}</h2>
+          <h2>Gender: {this.state.selectedOption}</h2>
+          <h2>Semester: {this.state.sem}</h2>
+          <h2>Division: {this.state.div}</h2>
+          <h2>Events:</h2>
+          <h2>{this.state.event1}</h2>
+          <h2>{this.state.event2}</h2>
+          <h2>{this.state.event3}</h2>
+          <h2>{this.state.event4}</h2>
+          <h2>{this.state.event5}</h2>
+        </div>
+      </form>
+    );
+  }
+}
+
+export default Form;
